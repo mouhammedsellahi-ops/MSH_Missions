@@ -1,0 +1,291 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.container {
+    width: 95%;
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* التنقل بين الأيام */
+
+.day-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.day-navigation > button {
+    border: none;
+    background: #222;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.selected-day {
+    min-width: 180px;
+    text-align: center;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+.selected-day strong {
+    display: block;
+    font-size: 18px;
+}
+
+.selected-day span {
+    color: #777;
+    font-size: 14px;
+}
+
+.today-btn {
+    font-size: 14px !important;
+    width: auto !important;
+    padding: 0 12px;
+}
+
+/* التقويم */
+
+.calendar-box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.calendar-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.calendar-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* إضافة مهمة */
+
+.add-task {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    display: grid;
+    gap: 10px;
+}
+
+.add-task input,
+.add-task select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.add-task button {
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #222;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* التقييم */
+
+.score-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.score-card h2 {
+    margin-top: 0;
+}
+
+.percentage {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.progress {
+    width: 100%;
+    height: 14px;
+    background: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: #222;
+    transition: width 0.3s;
+}
+
+.points {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+#scoreMessage {
+    color: #666;
+}
+
+/* الإحصائيات */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.stats div {
+    background: white;
+    padding: 12px 5px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stats strong {
+    display: block;
+    font-size: 22px;
+}
+
+.stats span {
+    font-size: 12px;
+    color: #777;
+}
+
+/* البحث */
+
+.search {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* الفلاتر */
+
+.filters {
+    display: flex;
+    gap: 7px;
+    margin: 12px 0;
+    overflow-x: auto;
+}
+
+.filters button {
+    border: none;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* المهام */
+
+#taskList {
+    display: grid;
+    gap: 10px;
+}
+
+.task {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.task.completed {
+    opacity: 0.65;
+}
+
+.task-title {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.task-info {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.priority {
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-size: 12px;
+    background: #eee;
+}
+
+.task-actions {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.task-actions button {
+    border: none;
+    padding: 9px 11px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+
+/* الهاتف */
+
+@media (max-width: 500px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .day-navigation {
+        flex-wrap: wrap;
+    }
+
+    .selected-day {
+        flex: 1;
+    }
+}

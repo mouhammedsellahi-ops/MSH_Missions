@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مهامي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📋 مهامي</h1>
+
+    <!-- التنقل بين الأيام -->
+    <section class="day-navigation">
+        <button onclick="previousDay()">‹</button>
+
+        <div class="selected-day">
+            <strong id="dayName">اليوم</strong>
+            <span id="selectedDateText"></span>
+        </div>
+
+        <button onclick="nextDay()">›</button>
+
+        <button class="today-btn" onclick="goToToday()">
+            اليوم
+        </button>
+    </section>
+
+    <!-- اختيار التاريخ -->
+    <div class="calendar-box">
+        <label for="viewDate">📅 اختر يوماً:</label>
+        <input type="date" id="viewDate" onchange="changeDate()">
+    </div>
+
+    <!-- إضافة مهمة -->
+    <section class="add-task">
+
+        <input
+            type="text"
+            id="taskInput"
+            placeholder="اكتب المهمة..."
+        >
+
+        <input
+            type="date"
+            id="taskDate"
+        >
+
+        <select id="priority">
+            <option value="low">منخفضة — 1 نقطة</option>
+            <option value="medium">متوسطة — 2 نقطة</option>
+            <option value="high">مهمة — 3 نقاط</option>
+        </select>
+
+        <button onclick="addTask()">
+            ➕ إضافة المهمة
+        </button>
+
+    </section>
+
+    <!-- تقييم اليوم -->
+    <section class="score-card">
+
+        <h2>📊 تقييم اليوم</h2>
+
+        <div class="percentage" id="percentage">
+            0%
+        </div>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <div class="points">
+            <span>
+                المكتسب:
+                <strong id="earnedPoints">0</strong>
+            </span>
+
+            <span>
+                المجموع:
+                <strong id="possiblePoints">0</strong>
+            </span>
+        </div>
+
+        <p id="scoreMessage">
+            لا توجد مهام لهذا اليوم.
+        </p>
+
+    </section>
+
+    <!-- إحصائيات -->
+    <section class="stats">
+
+        <div>
+            <strong id="totalTasks">0</strong>
+            <span>كل المهام</span>
+        </div>
+
+        <div>
+            <strong id="completedTasks">0</strong>
+            <span>منجزة</span>
+        </div>
+
+        <div>
+            <strong id="failedTasks">0</strong>
+            <span>لم تنجز</span>
+        </div>
+
+        <div>
+            <strong id="pendingTasks">0</strong>
+            <span>متبقية</span>
+        </div>
+
+    </section>
+
+    <!-- البحث -->
+    <input
+        type="text"
+        id="searchInput"
+        class="search"
+        placeholder="🔎 ابحث عن مهمة..."
+        oninput="displayTasks()"
+    >
+
+    <!-- الفلاتر -->
+    <div class="filters">
+
+        <button onclick="setFilter('all')">
+            الكل
+        </button>
+
+        <button onclick="setFilter('pending')">
+            المتبقية
+        </button>
+
+        <button onclick="setFilter('completed')">
+            المنجزة
+        </button>
+
+        <button onclick="setFilter('failed')">
+            لم تنجز
+        </button>
+
+    </div>
+
+    <!-- المهام -->
+    <section id="taskList"></section>
+
+    <div id="emptyState" class="empty">
+        لا توجد مهام لهذا اليوم 📭
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
