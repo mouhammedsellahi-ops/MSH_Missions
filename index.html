@@ -161,7 +161,38 @@
     <div id="emptyState" class="empty">
         لا توجد مهام لهذا اليوم 📭
     </div>
+<!-- قسم الملاحظات -->
+<section class="notes-section">
 
+    <h2>📝 ملاحظاتي</h2>
+
+    <div class="note-form">
+
+        <input
+            type="text"
+            id="noteTitle"
+            placeholder="عنوان الملاحظة..."
+        >
+
+        <textarea
+            id="noteContent"
+            placeholder="اكتب ملاحظتك هنا..."
+            rows="4"
+        ></textarea>
+
+        <button onclick="addNote()">
+            + إضافة ملاحظة
+        </button>
+
+    </div>
+
+    <div id="notesList"></div>
+
+    <div id="emptyNotes" class="empty">
+        لا توجد ملاحظات حتى الآن 📝
+    </div>
+
+</section>
 </div>
 
 <script src="script.js"></script>
