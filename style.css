@@ -152,11 +152,23 @@ h1 {
 .add-task button {
     padding: 13px;
     border: none;
-    border-radius: 10px;
-    background: #222;
-    color: white;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: var(--text-on-light);
+    font-family: var(--font-main);
     font-size: 16px;
+    font-weight: 800;
     cursor: pointer;
+    transition: var(--transition);
+}
+
+.add-task button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(255, 112, 94, 0.4);
+}
+
+.add-task button:active {
+    transform: translateY(0) scale(0.98);
 }
 
 /* التقييم */
