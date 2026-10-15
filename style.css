@@ -3,24 +3,6 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
-}
-
-.container {
-    width: 95%;
-    max-width: 700px;
-    margin: 20px auto;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 /* التنقل بين الأيام */
 
 .day-navigation {
