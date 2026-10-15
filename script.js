@@ -308,7 +308,35 @@ function setFilter(filter) {
 
     currentFilter = filter;
 
+    updateActiveFilter();
+
     displayTasks();
+}function updateActiveFilter() {
+
+    const buttons = document.querySelectorAll(".filters button");
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+    });
+
+    // ربط كل زر بالفلاتر المقابل
+    const filterMap = {
+        "all": 0,
+        "pending": 1,
+        "completed": 2,
+        "failed": 3
+    };
+
+    const index = filterMap[currentFilter];
+
+    if (index !== undefined && buttons[index]) {
+
+        buttons[index].classList.add("active");
+
+    }
+}
 }
 
 // ============================
@@ -653,7 +681,9 @@ document.getElementById("taskDate").value =
     selectedDate;
 
 updateDateDisplay();
+updateActiveFilter();
 
+displayNotes();
 displayTasks();
 
 updateStats();
