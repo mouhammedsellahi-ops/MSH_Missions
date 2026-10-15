@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
 }
@@ -288,4 +289,130 @@ h1 {
     .selected-day {
         flex: 1;
     }
+}
+/* الهوية الجديدة */
+
+body {
+    background: #123D2D;
+    color: #FFFFFF;
+}
+
+h1 {
+    color: #FFFFFF;
+}
+
+/* البطاقات */
+
+.score-card,
+.stats div,
+.calendar-box,
+.selected-day,
+.add-task,
+.task,
+.note-form,
+.note-card {
+    background: #E3F0E7;
+    color: #123D2D;
+}
+
+/* الأزرار */
+
+button {
+    background: #FF705E;
+    color: #173C2D;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+/* الحقول */
+
+input,
+textarea,
+select {
+    color: #123D2D;
+}
+
+/* قسم الملاحظات */
+
+.notes-section {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 16px;
+    background: #1B503B;
+}
+
+.notes-section h2 {
+    color: white;
+    text-align: center;
+    margin-top: 0;
+}
+
+.note-form {
+    padding: 15px;
+    border-radius: 12px;
+    display: grid;
+    gap: 10px;
+}
+
+.note-form input,
+.note-form textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #B9D1C0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.note-form textarea {
+    resize: vertical;
+}
+
+.note-form button {
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+/* بطاقات الملاحظات */
+
+#notesList {
+    display: grid;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.note-card {
+    padding: 15px;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+}
+
+.note-card h3 {
+    margin: 0 0 10px;
+}
+
+.note-card p {
+    white-space: pre-wrap;
+    line-height: 1.7;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.note-actions button {
+    padding: 9px 13px;
+    border-radius: 8px;
+}
+
+.notes-section .empty {
+    color: #D5E9DC;
 }
