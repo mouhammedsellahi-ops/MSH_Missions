@@ -1,3 +1,4 @@
+
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let currentFilter = "all";
@@ -658,3 +659,182 @@ displayTasks();
 updateStats();
 
 updateDailyScore();
+// ============================
+// نظام الملاحظات
+// ============================
+
+let notes = JSON.parse(
+    localStorage.getItem("notes")
+) || [];
+
+
+// حفظ الملاحظات
+
+function saveNotes() {
+
+    localStorage.setItem(
+        "notes",
+        JSON.stringify(notes)
+    );
+
+}
+
+
+// إضافة ملاحظة
+
+function addNote() {
+
+    const titleInput =
+        document.getElementById("noteTitle");
+
+    const contentInput =
+        document.getElementById("noteContent");
+
+    const title = titleInput.value.trim();
+
+    const content = contentInput.value.trim();
+
+    if (!title || !content) {
+
+        alert("اكتب عنوان الملاحظة ومحتواها.");
+
+        return;
+
+    }
+
+    const note = {
+
+        id: Date.now(),
+
+        title: title,
+
+        content: content,
+
+        createdAt: new Date().toISOString()
+
+    };
+
+    notes.unshift(note);
+
+    saveNotes();
+
+    displayNotes();
+
+    titleInput.value = "";
+
+    contentInput.value = "";
+
+}
+
+
+// عرض الملاحظات
+
+function displayNotes() {
+
+    const list =
+        document.getElementById("notesList");
+
+    const empty =
+        document.getElementById("emptyNotes");
+
+    list.innerHTML = "";
+
+    empty.style.display =
+        notes.length === 0 ? "block" : "none";
+
+    notes.forEach(note => {
+
+        const card = document.createElement("div");
+
+        card.className = "note-card";
+
+        card.innerHTML = `
+
+            <h3>${escapeHTML(note.title)}</h3>
+
+            <p>${escapeHTML(note.content)}</p>
+
+            <div class="note-actions">
+
+                <button onclick="editNote(${note.id})">
+                    ✏️ تعديل
+                </button>
+
+                <button onclick="deleteNote(${note.id})">
+                    🗑️ حذف
+                </button>
+
+            </div>
+
+        `;
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+// تعديل ملاحظة
+
+function editNote(id) {
+
+    const note = notes.find(n => n.id === id);
+
+    if (!note) return;
+
+    const newTitle = prompt(
+        "عنوان الملاحظة:",
+        note.title
+    );
+
+    if (newTitle === null) return;
+
+    const newContent = prompt(
+        "محتوى الملاحظة:",
+        note.content
+    );
+
+    if (newContent === null) return;
+
+    if (!newTitle.trim() || !newContent.trim()) {
+
+        alert("لا يمكن ترك العنوان أو المحتوى فارغًا.");
+
+        return;
+
+    }
+
+    note.title = newTitle.trim();
+
+    note.content = newContent.trim();
+
+    saveNotes();
+
+    displayNotes();
+
+}
+
+
+// حذف ملاحظة
+
+function deleteNote(id) {
+
+    const confirmed = confirm(
+        "هل تريد حذف هذه الملاحظة؟"
+    );
+
+    if (!confirmed) return;
+
+    notes = notes.filter(n => n.id !== id);
+
+    saveNotes();
+
+    displayNotes();
+
+}
+
+
+// عرض الملاحظات عند فتح التطبيق
+
+displayNotes();
