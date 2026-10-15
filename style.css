@@ -249,14 +249,31 @@ h1 {
     margin: 12px 0;
     overflow-x: auto;
 }
-
 .filters button {
     border: none;
     background: white;
+    color: var(--text-on-light);
     padding: 10px 14px;
     border-radius: 10px;
     cursor: pointer;
     white-space: nowrap;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.filters button:hover {
+    background: #d4e6da;
+    transform: translateY(-1px);
+}
+
+.filters button.active {
+    background: var(--accent);
+    color: var(--text-on-light);
+    box-shadow: 0 3px 10px rgba(255, 112, 94, 0.4);
+    transform: translateY(-1px);
+}
 }
 
 /* المهام */
