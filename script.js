@@ -1,3 +1,6 @@
+/* ============================
+   المتغيرات العامة
+   ============================ */
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
@@ -5,9 +8,9 @@ let currentFilter = "all";
 
 let selectedDate = getToday();
 
-// ============================
-// التاريخ
-// ============================
+/* ============================
+   التاريخ
+   ============================ */
 
 function getToday() {
 
@@ -16,6 +19,17 @@ function getToday() {
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+function formatDate(date) {
+
+    const year = date.getFullYear();
+
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+
+    const day = String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
 }
@@ -61,22 +75,10 @@ function goToToday() {
     refreshDay();
 }
 
-function formatDate(date) {
-
-    const year = date.getFullYear();
-
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-
-    const day = String(date.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-}
-
 function refreshDay() {
 
     document.getElementById("viewDate").value = selectedDate;
 
-    // نجعل تاريخ إضافة المهمة هو اليوم المختار
     document.getElementById("taskDate").value = selectedDate;
 
     displayTasks();
@@ -85,9 +87,9 @@ function refreshDay() {
     updateDateDisplay();
 }
 
-// ============================
-// عرض التاريخ
-// ============================
+/* ============================
+   عرض التاريخ
+   ============================ */
 
 function updateDateDisplay() {
 
@@ -96,11 +98,9 @@ function updateDateDisplay() {
     const today = new Date(getToday() + "T00:00:00");
 
     const tomorrow = new Date(today);
-
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     const yesterday = new Date(today);
-
     yesterday.setDate(yesterday.getDate() - 1);
 
     let name = date.toLocaleDateString("ar", {
@@ -108,21 +108,11 @@ function updateDateDisplay() {
     });
 
     if (selectedDate === getToday()) {
-
         name = "اليوم";
-
-    } else if (
-        selectedDate === formatDate(tomorrow)
-    ) {
-
+    } else if (selectedDate === formatDate(tomorrow)) {
         name = "غدًا";
-
-    } else if (
-        selectedDate === formatDate(yesterday)
-    ) {
-
+    } else if (selectedDate === formatDate(yesterday)) {
         name = "أمس";
-
     }
 
     document.getElementById("dayName").textContent = name;
@@ -135,9 +125,9 @@ function updateDateDisplay() {
         });
 }
 
-// ============================
-// النقاط
-// ============================
+/* ============================
+   النقاط
+   ============================ */
 
 function getPoints(priority) {
 
@@ -148,9 +138,9 @@ function getPoints(priority) {
     return 1;
 }
 
-// ============================
-// إضافة مهمة
-// ============================
+/* ============================
+   إضافة مهمة
+   ============================ */
 
 function addTask() {
 
@@ -167,40 +157,28 @@ function addTask() {
     const priority = priorityInput.value;
 
     if (!text) {
-
         alert("اكتب المهمة أولًا.");
-
         return;
     }
 
     if (!date) {
-
         alert("اختر تاريخ المهمة.");
-
         return;
     }
 
     const task = {
-
         id: Date.now(),
-
         text: text,
-
         date: date,
-
         priority: priority,
-
         status: "pending",
-
         createdAt: new Date().toISOString()
-
     };
 
     tasks.push(task);
 
     saveTasks();
 
-    // الانتقال تلقائيًا إلى يوم المهمة
     selectedDate = date;
 
     document.getElementById("viewDate").value = date;
@@ -210,9 +188,9 @@ function addTask() {
     refreshDay();
 }
 
-// ============================
-// تغيير حالة المهمة
-// ============================
+/* ============================
+   تغيير حالة المهمة
+   ============================ */
 
 function completeTask(id) {
 
@@ -253,15 +231,13 @@ function resetTask(id) {
     refreshDay();
 }
 
-// ============================
-// حذف المهمة
-// ============================
+/* ============================
+   حذف المهمة
+   ============================ */
 
 function deleteTask(id) {
 
-    const confirmed = confirm(
-        "هل تريد حذف هذه المهمة؟"
-    );
+    const confirmed = confirm("هل تريد حذف هذه المهمة؟");
 
     if (!confirmed) return;
 
@@ -272,9 +248,9 @@ function deleteTask(id) {
     refreshDay();
 }
 
-// ============================
-// تعديل المهمة
-// ============================
+/* ============================
+   تعديل المهمة
+   ============================ */
 
 function editTask(id) {
 
@@ -282,10 +258,7 @@ function editTask(id) {
 
     if (!task) return;
 
-    const newText = prompt(
-        "عدّل المهمة:",
-        task.text
-    );
+    const newText = prompt("عدّل المهمة:", task.text);
 
     if (newText === null) return;
 
@@ -300,9 +273,9 @@ function editTask(id) {
     refreshDay();
 }
 
-// ============================
-// الفلاتر
-// ============================
+/* ============================
+   الفلاتر
+   ============================ */
 
 function setFilter(filter) {
 
@@ -311,17 +284,16 @@ function setFilter(filter) {
     updateActiveFilter();
 
     displayTasks();
-}function updateActiveFilter() {
+}
+
+function updateActiveFilter() {
 
     const buttons = document.querySelectorAll(".filters button");
 
     buttons.forEach(button => {
-
         button.classList.remove("active");
-
     });
 
-    // ربط كل زر بالفلاتر المقابل
     const filterMap = {
         "all": 0,
         "pending": 1,
@@ -332,16 +304,13 @@ function setFilter(filter) {
     const index = filterMap[currentFilter];
 
     if (index !== undefined && buttons[index]) {
-
         buttons[index].classList.add("active");
-
     }
 }
-}
 
-// ============================
-// عرض المهام
-// ============================
+/* ============================
+   عرض المهام
+   ============================ */
 
 function displayTasks() {
 
@@ -359,40 +328,26 @@ function displayTasks() {
 
     let filteredTasks = tasks.filter(task => {
 
-        const sameDate =
-            task.date === selectedDate;
+        const sameDate = task.date === selectedDate;
 
         const matchesSearch =
-            task.text
-                .toLowerCase()
-                .includes(searchText);
+            task.text.toLowerCase().includes(searchText);
 
         const matchesFilter =
             currentFilter === "all" ||
             task.status === currentFilter;
 
-        return (
-            sameDate &&
-            matchesSearch &&
-            matchesFilter
-        );
+        return sameDate && matchesSearch && matchesFilter;
 
     });
 
-    // ترتيب المهام حسب الأولوية
     filteredTasks.sort((a, b) => {
-
-        return getPoints(b.priority) -
-               getPoints(a.priority);
-
+        return getPoints(b.priority) - getPoints(a.priority);
     });
 
     if (filteredTasks.length === 0) {
-
         emptyState.style.display = "block";
-
         return;
-
     }
 
     emptyState.style.display = "none";
@@ -401,102 +356,57 @@ function displayTasks() {
 
         const div = document.createElement("div");
 
-        div.className =
-            "task " +
-            (task.status === "completed"
-                ? "completed"
-                : "");
+        div.className = "task " +
+            (task.status === "completed" ? "completed" : "");
 
         let priorityText = "";
 
         if (task.priority === "high") {
-
             priorityText = "🔴 مهمة — 3 نقاط";
-
         } else if (task.priority === "medium") {
-
             priorityText = "🟡 متوسطة — 2 نقاط";
-
         } else {
-
             priorityText = "🟢 منخفضة — 1 نقطة";
-
         }
 
         let statusText = "";
 
         if (task.status === "completed") {
-
             statusText = "✅ منجزة";
-
         } else if (task.status === "failed") {
-
             statusText = "❌ لم تنجز";
-
         } else {
-
             statusText = "⏳ متبقية";
-
         }
 
         div.innerHTML = `
-
             <div class="task-title">
                 ${escapeHTML(task.text)}
             </div>
 
             <div class="task-info">
-
-                <span class="priority">
-                    ${priorityText}
-                </span>
-
-                <span class="priority">
-                    ${statusText}
-                </span>
-
+                <span class="priority">${priorityText}</span>
+                <span class="priority">${statusText}</span>
             </div>
 
             <div class="task-actions">
-
                 ${
                     task.status !== "completed"
-                    ?
-                    `<button onclick="completeTask(${task.id})">
-                        ✅ أنجزت
-                    </button>`
-                    :
-                    ""
+                    ? `<button onclick="completeTask(${task.id})">✅ أنجزت</button>`
+                    : ""
                 }
-
                 ${
                     task.status !== "failed"
-                    ?
-                    `<button onclick="failTask(${task.id})">
-                        ❌ لم أنجز
-                    </button>`
-                    :
-                    ""
+                    ? `<button onclick="failTask(${task.id})">❌ لم أنجز</button>`
+                    : ""
                 }
-
                 ${
                     task.status !== "pending"
-                    ?
-                    `<button onclick="resetTask(${task.id})">
-                        🔄 إعادة
-                    </button>`
-                    :
-                    ""
+                    ? `<button onclick="resetTask(${task.id})">🔄 إعادة</button>`
+                    : ""
                 }
-
-                <button onclick="editTask(${task.id})">
-                    ✏️ تعديل
-                </button>
-
-                <button onclick="deleteTask(${task.id})">
-                    🗑️ حذف
-                </button>
-
+                <button onclick="editTask(${task.id})">✏️ تعديل</button>
+                <button onclick="deleteTask(${task.id})">🗑️ حذف</button>
             </div>
         `;
 
@@ -505,71 +415,48 @@ function displayTasks() {
     });
 }
 
-// ============================
-// الإحصائيات
-// ============================
+/* ============================
+   الإحصائيات
+   ============================ */
 
 function updateStats() {
 
-    const todayTasks =
-        tasks.filter(task =>
-            task.date === selectedDate
-        );
+    const todayTasks = tasks.filter(task => task.date === selectedDate);
 
     const completed =
-        todayTasks.filter(
-            task => task.status === "completed"
-        ).length;
+        todayTasks.filter(task => task.status === "completed").length;
 
     const failed =
-        todayTasks.filter(
-            task => task.status === "failed"
-        ).length;
+        todayTasks.filter(task => task.status === "failed").length;
 
     const pending =
-        todayTasks.filter(
-            task => task.status === "pending"
-        ).length;
+        todayTasks.filter(task => task.status === "pending").length;
 
-    document.getElementById("totalTasks")
-        .textContent = todayTasks.length;
-
-    document.getElementById("completedTasks")
-        .textContent = completed;
-
-    document.getElementById("failedTasks")
-        .textContent = failed;
-
-    document.getElementById("pendingTasks")
-        .textContent = pending;
+    document.getElementById("totalTasks").textContent = todayTasks.length;
+    document.getElementById("completedTasks").textContent = completed;
+    document.getElementById("failedTasks").textContent = failed;
+    document.getElementById("pendingTasks").textContent = pending;
 }
 
-// ============================
-// التقييم اليومي
-// ============================
+/* ============================
+   التقييم اليومي
+   ============================ */
 
 function updateDailyScore() {
 
-    const dayTasks =
-        tasks.filter(task =>
-            task.date === selectedDate
-        );
+    const dayTasks = tasks.filter(task => task.date === selectedDate);
 
     let possiblePoints = 0;
-
     let earnedPoints = 0;
 
     dayTasks.forEach(task => {
 
-        const points =
-            getPoints(task.priority);
+        const points = getPoints(task.priority);
 
         possiblePoints += points;
 
         if (task.status === "completed") {
-
             earnedPoints += points;
-
         }
 
     });
@@ -577,171 +464,82 @@ function updateDailyScore() {
     let percentage = 0;
 
     if (possiblePoints > 0) {
-
-        percentage =
-            Math.round(
-                (earnedPoints / possiblePoints) * 100
-            );
-
+        percentage = Math.round((earnedPoints / possiblePoints) * 100);
     }
 
-    document.getElementById("percentage")
-        .textContent = percentage + "%";
+    document.getElementById("percentage").textContent = percentage + "%";
+    document.getElementById("earnedPoints").textContent = earnedPoints;
+    document.getElementById("possiblePoints").textContent = possiblePoints;
+    document.getElementById("progressBar").style.width = percentage + "%";
 
-    document.getElementById("earnedPoints")
-        .textContent = earnedPoints;
-
-    document.getElementById("possiblePoints")
-        .textContent = possiblePoints;
-
-    document.getElementById("progressBar")
-        .style.width = percentage + "%";
-
-    const message =
-        document.getElementById("scoreMessage");
+    const message = document.getElementById("scoreMessage");
 
     if (dayTasks.length === 0) {
-
-        message.textContent =
-            "لا توجد مهام لهذا اليوم.";
-
+        message.textContent = "لا توجد مهام لهذا اليوم.";
     } else if (percentage === 100) {
-
-        message.textContent =
-            "🔥 ممتاز! أنجزت كل مهام هذا اليوم!";
-
+        message.textContent = "🔥 ممتاز! أنجزت كل مهام هذا اليوم!";
     } else if (percentage >= 75) {
-
-        message.textContent =
-            "💪 أداء قوي جدًا!";
-
+        message.textContent = "💪 أداء قوي جدًا!";
     } else if (percentage >= 50) {
-
-        message.textContent =
-            "👍 بداية جيدة، حاول رفع النسبة.";
-
+        message.textContent = "👍 بداية جيدة، حاول رفع النسبة.";
     } else {
-
-        message.textContent =
-            "🎯 ركّز على المهام ذات الأولوية العالية.";
-
+        message.textContent = "🎯 ركّز على المهام ذات الأولوية العالية.";
     }
 }
 
-// ============================
-// حفظ البيانات
-// ============================
+/* ============================
+   حفظ البيانات
+   ============================ */
 
 function saveTasks() {
 
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// ============================
-// حماية النص
-// ============================
+/* ============================
+   حماية النص
+   ============================ */
 
 function escapeHTML(text) {
 
-    const div =
-        document.createElement("div");
+    const div = document.createElement("div");
 
     div.textContent = text;
 
     return div.innerHTML;
 }
 
-// ============================
-// زر Enter
-// ============================
+/* ============================
+   نظام الملاحظات
+   ============================ */
 
-document
-    .getElementById("taskInput")
-    .addEventListener("keydown", function(event) {
-
-        if (event.key === "Enter") {
-
-            addTask();
-
-        }
-
-    });
-
-// ============================
-// التشغيل الأول
-// ============================
-
-document.getElementById("viewDate").value =
-    selectedDate;
-
-document.getElementById("taskDate").value =
-    selectedDate;
-
-updateDateDisplay();
-updateActiveFilter();
-
-displayNotes();
-displayTasks();
-
-updateStats();
-
-updateDailyScore();
-// ============================
-// نظام الملاحظات
-// ============================
-
-let notes = JSON.parse(
-    localStorage.getItem("notes")
-) || [];
-
-
-// حفظ الملاحظات
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
 function saveNotes() {
 
-    localStorage.setItem(
-        "notes",
-        JSON.stringify(notes)
-    );
-
+    localStorage.setItem("notes", JSON.stringify(notes));
 }
-
-
-// إضافة ملاحظة
 
 function addNote() {
 
-    const titleInput =
-        document.getElementById("noteTitle");
+    const titleInput = document.getElementById("noteTitle");
 
-    const contentInput =
-        document.getElementById("noteContent");
+    const contentInput = document.getElementById("noteContent");
 
     const title = titleInput.value.trim();
 
     const content = contentInput.value.trim();
 
     if (!title || !content) {
-
         alert("اكتب عنوان الملاحظة ومحتواها.");
-
         return;
-
     }
 
     const note = {
-
         id: Date.now(),
-
         title: title,
-
         content: content,
-
         createdAt: new Date().toISOString()
-
     };
 
     notes.unshift(note);
@@ -751,26 +549,18 @@ function addNote() {
     displayNotes();
 
     titleInput.value = "";
-
     contentInput.value = "";
-
 }
-
-
-// عرض الملاحظات
 
 function displayNotes() {
 
-    const list =
-        document.getElementById("notesList");
+    const list = document.getElementById("notesList");
 
-    const empty =
-        document.getElementById("emptyNotes");
+    const empty = document.getElementById("emptyNotes");
 
     list.innerHTML = "";
 
-    empty.style.display =
-        notes.length === 0 ? "block" : "none";
+    empty.style.display = notes.length === 0 ? "block" : "none";
 
     notes.forEach(note => {
 
@@ -779,33 +569,18 @@ function displayNotes() {
         card.className = "note-card";
 
         card.innerHTML = `
-
             <h3>${escapeHTML(note.title)}</h3>
-
             <p>${escapeHTML(note.content)}</p>
-
             <div class="note-actions">
-
-                <button onclick="editNote(${note.id})">
-                    ✏️ تعديل
-                </button>
-
-                <button onclick="deleteNote(${note.id})">
-                    🗑️ حذف
-                </button>
-
+                <button onclick="editNote(${note.id})">✏️ تعديل</button>
+                <button onclick="deleteNote(${note.id})">🗑️ حذف</button>
             </div>
-
         `;
 
         list.appendChild(card);
 
     });
-
 }
-
-
-// تعديل ملاحظة
 
 function editNote(id) {
 
@@ -813,46 +588,30 @@ function editNote(id) {
 
     if (!note) return;
 
-    const newTitle = prompt(
-        "عنوان الملاحظة:",
-        note.title
-    );
+    const newTitle = prompt("عنوان الملاحظة:", note.title);
 
     if (newTitle === null) return;
 
-    const newContent = prompt(
-        "محتوى الملاحظة:",
-        note.content
-    );
+    const newContent = prompt("محتوى الملاحظة:", note.content);
 
     if (newContent === null) return;
 
     if (!newTitle.trim() || !newContent.trim()) {
-
         alert("لا يمكن ترك العنوان أو المحتوى فارغًا.");
-
         return;
-
     }
 
     note.title = newTitle.trim();
-
     note.content = newContent.trim();
 
     saveNotes();
 
     displayNotes();
-
 }
-
-
-// حذف ملاحظة
 
 function deleteNote(id) {
 
-    const confirmed = confirm(
-        "هل تريد حذف هذه الملاحظة؟"
-    );
+    const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
 
     if (!confirmed) return;
 
@@ -861,10 +620,37 @@ function deleteNote(id) {
     saveNotes();
 
     displayNotes();
-
 }
 
+/* ============================
+   التشغيل الأول
+   ============================ */
 
-// عرض الملاحظات عند فتح التطبيق
+document.addEventListener("DOMContentLoaded", function () {
 
-displayNotes();
+    document.getElementById("viewDate").value = selectedDate;
+
+    document.getElementById("taskDate").value = selectedDate;
+
+    document.getElementById("taskInput")
+        .addEventListener("keydown", function (event) {
+
+            if (event.key === "Enter") {
+                addTask();
+            }
+
+        });
+
+    updateDateDisplay();
+
+    updateActiveFilter();
+
+    displayTasks();
+
+    updateStats();
+
+    updateDailyScore();
+
+    displayNotes();
+
+});
