@@ -1,4 +1,63 @@
+/* ============================
+   المتغيرات والهوية العامة
+   ============================ */
 
+:root {
+    /* الألوان الأساسية */
+    --bg-dark: #123D2D;
+    --bg-medium: #1B503B;
+    --bg-light: #E3F0E7;
+    --accent: #FF705E;
+    --text-on-dark: #FFFFFF;
+    --text-on-light: #123D2D;
+    --text-muted: #777;
+    --border-light: #B9D1C0;
+
+    /* الخطوط */
+    --font-main: 'Tajawal', Arial, sans-serif;
+
+    /* القياسات */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 15px;
+    --radius-xl: 16px;
+
+    /* الحركات */
+    --transition: 0.25s ease;
+}
+
+/* ============================
+   أساسيات
+   ============================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    font-weight: 500;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: 95%;
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-on-dark);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
 * {
     box-sizing: border-box;
 }
