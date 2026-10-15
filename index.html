@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Med-SH Missions</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="IMG_6663.jpeg">
-        <!-- إعدادات التطبيق -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2196f3">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Med-SH Missions">
-<meta name="google-site-verification" content="vsgkw_1am5UasidsyfZOm_n5ryyMhZfly1MWaSrjvfo" />
+
+    <!-- الخط الفخم -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- ملف الأنماط -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- إعدادات التطبيق -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Med-SH Missions">
+    <meta name="google-site-verification" content="vsgkw_1am5UasidsyfZOm_n5ryyMhZfly1MWaSrjvfo" />
 </head>
 
 <body>
@@ -164,38 +169,39 @@
     <div id="emptyState" class="empty">
         لا توجد مهام لهذا اليوم 📭
     </div>
-<!-- قسم الملاحظات -->
-<section class="notes-section">
 
-    <h2>📝 ملاحظاتي</h2>
+    <!-- قسم الملاحظات -->
+    <section class="notes-section">
 
-    <div class="note-form">
+        <h2>📝 ملاحظاتي</h2>
 
-        <input
-            type="text"
-            id="noteTitle"
-            placeholder="عنوان الملاحظة..."
-        >
+        <div class="note-form">
 
-        <textarea
-            id="noteContent"
-            placeholder="اكتب ملاحظتك هنا..."
-            rows="4"
-        ></textarea>
+            <input
+                type="text"
+                id="noteTitle"
+                placeholder="عنوان الملاحظة..."
+            >
 
-        <button onclick="addNote()">
-            + إضافة ملاحظة
-        </button>
+            <textarea
+                id="noteContent"
+                placeholder="اكتب ملاحظتك هنا..."
+                rows="4"
+            ></textarea>
 
-    </div>
+            <button onclick="addNote()">
+                + إضافة ملاحظة
+            </button>
 
-    <div id="notesList"></div>
+        </div>
 
-    <div id="emptyNotes" class="empty">
-        لا توجد ملاحظات حتى الآن 📝
-    </div>
+        <div id="notesList"></div>
 
-</section>
+        <div id="emptyNotes" class="empty">
+            لا توجد ملاحظات حتى الآن 📝
+        </div>
+
+    </section>
 </div>
 
 <script src="script.js"></script>
