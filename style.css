@@ -3,7 +3,6 @@
    ============================ */
 
 :root {
-    /* الألوان الأساسية */
     --bg-dark: #123D2D;
     --bg-medium: #1B503B;
     --bg-light: #E3F0E7;
@@ -13,16 +12,13 @@
     --text-muted: #777;
     --border-light: #B9D1C0;
 
-    /* الخطوط */
     --font-main: 'Tajawal', Arial, sans-serif;
 
-    /* القياسات */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 15px;
     --radius-xl: 16px;
 
-    /* الحركات */
     --transition: 0.25s ease;
 }
 
@@ -58,11 +54,10 @@ h1 {
     font-weight: 800;
     letter-spacing: 0.5px;
 }
-* {
-    box-sizing: border-box;
-}
 
-/* التنقل بين الأيام */
+/* ============================
+   التنقل بين الأيام
+   ============================ */
 
 .day-navigation {
     display: flex;
@@ -97,9 +92,10 @@ h1 {
 .selected-day {
     min-width: 180px;
     text-align: center;
-    background: white;
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 10px 15px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
 }
 
 .selected-day strong {
@@ -108,29 +104,32 @@ h1 {
 }
 
 .selected-day span {
-    color: #777;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
 .today-btn {
     font-size: 14px !important;
     width: auto !important;
-    padding: 0 12px;
+    padding: 0 14px !important;
 }
 
-/* التقويم */
+/* ============================
+   التقويم
+   ============================ */
 
 .calendar-box {
-    background: white;
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 15px;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     margin-bottom: 15px;
 }
 
 .calendar-box label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .calendar-box input {
@@ -139,14 +138,18 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 16px;
+    font-family: var(--font-main);
 }
 
-/* إضافة مهمة */
+/* ============================
+   إضافة مهمة
+   ============================ */
 
 .add-task {
-    background: white;
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 15px;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     display: grid;
     gap: 10px;
 }
@@ -158,6 +161,7 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 16px;
+    font-family: var(--font-main);
 }
 
 .add-task button {
@@ -182,12 +186,15 @@ h1 {
     transform: translateY(0) scale(0.98);
 }
 
-/* التقييم */
+/* ============================
+   التقييم
+   ============================ */
 
 .score-card {
-    background: white;
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 20px;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     margin-top: 15px;
     text-align: center;
 }
@@ -201,19 +208,6 @@ h1 {
     font-weight: 800;
     margin: 10px;
     color: var(--accent);
-    animation: scorePulse 0.5s ease-out;
-}
-
-@keyframes scorePulse {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.6;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 }
 
 .progress {
@@ -231,7 +225,6 @@ h1 {
     border-radius: 20px;
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-}
 
 .points {
     display: flex;
@@ -243,7 +236,9 @@ h1 {
     color: #666;
 }
 
-/* الإحصائيات */
+/* ============================
+   الإحصائيات
+   ============================ */
 
 .stats {
     display: grid;
@@ -253,9 +248,10 @@ h1 {
 }
 
 .stats div {
-    background: white;
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 12px 5px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     text-align: center;
 }
 
@@ -266,10 +262,12 @@ h1 {
 
 .stats span {
     font-size: 12px;
-    color: #777;
+    color: var(--text-muted);
 }
 
-/* البحث */
+/* ============================
+   البحث
+   ============================ */
 
 .search {
     width: 100%;
@@ -278,9 +276,12 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 16px;
+    font-family: var(--font-main);
 }
 
-/* الفلاتر */
+/* ============================
+   الفلاتر
+   ============================ */
 
 .filters {
     display: flex;
@@ -288,9 +289,10 @@ h1 {
     margin: 12px 0;
     overflow-x: auto;
 }
+
 .filters button {
     border: none;
-    background: white;
+    background: var(--bg-light);
     color: var(--text-on-light);
     padding: 10px 14px;
     border-radius: 10px;
@@ -313,9 +315,10 @@ h1 {
     box-shadow: 0 3px 10px rgba(255, 112, 94, 0.4);
     transform: translateY(-1px);
 }
-}
 
-/* المهام */
+/* ============================
+   المهام
+   ============================ */
 
 #taskList {
     display: grid;
@@ -346,7 +349,6 @@ h1 {
         transform: translateY(0);
     }
 }
-}
 
 .task.completed {
     opacity: 0.65;
@@ -354,7 +356,7 @@ h1 {
 
 .task-title {
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 8px;
 }
 
@@ -403,80 +405,31 @@ h1 {
 .empty {
     text-align: center;
     padding: 30px;
-    color: #777;
+    color: var(--text-muted);
 }
 
-/* الهاتف */
-
-@media (max-width: 500px) {
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .day-navigation {
-        flex-wrap: wrap;
-    }
-
-    .selected-day {
-        flex: 1;
-    }
-}
-
-/* البطاقات */
-
-.score-card,
-.stats div,
-.calendar-box,
-.selected-day,
-.add-task,
-.task,
-.note-form,
-.note-card {
-    background: #E3F0E7;
-    color: #123D2D;
-}
-
-/* الأزرار */
-
-button {
-    background: #FF705E;
-    color: #173C2D;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.85;
-}
-
-/* الحقول */
-
-input,
-textarea,
-select {
-    color: #123D2D;
-}
-
-/* قسم الملاحظات */
+/* ============================
+   قسم الملاحظات
+   ============================ */
 
 .notes-section {
     margin-top: 25px;
     padding: 18px;
-    border-radius: 16px;
-    background: #1B503B;
+    border-radius: var(--radius-xl);
+    background: var(--bg-medium);
 }
 
 .notes-section h2 {
-    color: white;
+    color: var(--text-on-dark);
     text-align: center;
     margin-top: 0;
 }
 
 .note-form {
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 15px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     display: grid;
     gap: 10px;
 }
@@ -485,9 +438,9 @@ select {
 .note-form textarea {
     width: 100%;
     padding: 13px;
-    border: 1px solid #B9D1C0;
+    border: 1px solid var(--border-light);
     border-radius: 10px;
-    font-family: inherit;
+    font-family: var(--font-main);
     font-size: 15px;
 }
 
@@ -497,11 +450,25 @@ select {
 
 .note-form button {
     padding: 13px;
+    border: none;
     border-radius: 10px;
+    background: var(--accent);
+    color: var(--text-on-light);
+    font-family: var(--font-main);
+    font-weight: 800;
     font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-/* بطاقات الملاحظات */
+.note-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(255, 112, 94, 0.4);
+}
+
+/* ============================
+   بطاقات الملاحظات
+   ============================ */
 
 #notesList {
     display: grid;
@@ -510,6 +477,8 @@ select {
 }
 
 .note-card {
+    background: var(--bg-light);
+    color: var(--text-on-light);
     padding: 15px;
     border-radius: var(--radius-md);
     overflow-wrap: anywhere;
@@ -539,9 +508,41 @@ select {
 
 .note-actions button {
     padding: 9px 13px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--accent);
+    color: var(--text-on-light);
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.note-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 112, 94, 0.35);
 }
 
 .notes-section .empty {
     color: #D5E9DC;
+}
+
+/* ============================
+   الهاتف
+   ============================ */
+
+@media (max-width: 500px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .day-navigation {
+        flex-wrap: wrap;
+    }
+
+    .selected-day {
+        flex: 1;
+    }
 }
