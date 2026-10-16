@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="apple-touch-icon" href="IMG_6810.jpeg">
-        <meta name="description" content="Med-SH Missions — تطبيق إدارة المهام اليومية مع نظام النقاط والملاحظات">
-<meta name="description" content="Med-SH Missions — تطبيق عربي لإدارة المهام اليومية مع نظام النقاط والأولويات والملاحظات. أنجز مهامك وتابع أداءك.">
-<meta name="keywords" content="مهام، إدارة الوقت، تنظيم، تخطيط، Med-SH، تطبيق عربي">
-<meta name="author" content="Mohammed Sellahi">
-
-<!-- Open Graph (عند المشاركة على فيسبوك/واتساب) -->
-<meta property="og:title" content="Med-SH Missions — إدارة المهام">
-<meta property="og:description" content="تطبيق مهام يومي مع نظام النقاط والملاحظات">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mouhammedsellahi-ops.github.io/MSH_Missions/">
-<meta property="og:image" content="https://mouhammedsellahi-ops.github.io/MSH_Missions/IMG_6810.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ═══ معلومات SEO ═══ -->
     <title>Med-SH Missions — إدارة المهام اليومية</title>
+    <meta name="description" content="Med-SH Missions — تطبيق عربي لإدارة المهام اليومية مع نظام النقاط والأولويات والملاحظات. أنجز مهامك وتابع أداءك.">
+    <meta name="keywords" content="مهام، إدارة الوقت، تنظيم، تخطيط، Med-SH، تطبيق عربي، مهام يومية">
+    <meta name="author" content="Mohammed Sellahi">
+
+    <!-- ═══ Open Graph (للمشاركة على فيسبوك/واتساب) ═══ -->
+    <meta property="og:title" content="Med-SH Missions — إدارة المهام">
+    <meta property="og:description" content="تطبيق مهام يومي مع نظام النقاط والملاحظات">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mouhammedsellahi-ops.github.io/MSH_Missions/">
+    <meta property="og:image" content="https://mouhammedsellahi-ops.github.io/MSH_Missions/IMG_6810.jpeg">
+
+    <!-- ═══ الأيقونات ═══ -->
     <link rel="icon" type="image/jpeg" href="IMG_6810.jpeg">
+    <link rel="apple-touch-icon" href="IMG_6810.jpeg">
 
-    <!-- الخط الفخم -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-
-    <!-- ملف الأنماط -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- إعدادات التطبيق -->
+    <!-- ═══ ملف PWA ═══ -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2196f3">
+    <meta name="theme-color" content="#123D2D">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Med-SH Missions">
     <meta name="google-site-verification" content="vsgkw_1am5UasidsyfZOm_n5ryyMhZfly1MWaSrjvfo" />
+
+    <!-- ═══ الخط الفخم ═══ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- ═══ ملف الأنماط ═══ -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -41,7 +44,7 @@
 
     <h1>📋 Med-SH Mission</h1>
 
-    <!-- التنقل بين الأيام -->
+    <!-- ═══ التنقل بين الأيام ═══ -->
     <section class="day-navigation">
         <button onclick="previousDay()">‹</button>
 
@@ -52,202 +55,95 @@
 
         <button onclick="nextDay()">›</button>
 
-        <button class="today-btn" onclick="goToToday()">
-            اليوم
-        </button>
+        <button class="today-btn" onclick="goToToday()">اليوم</button>
     </section>
 
-    <!-- اختيار التاريخ -->
+    <!-- ═══ اختيار التاريخ ═══ -->
     <div class="calendar-box">
         <label for="viewDate">📅 اختر يوماً:</label>
         <input type="date" id="viewDate" onchange="changeDate()">
     </div>
 
-    <!-- إضافة مهمة -->
+    <!-- ═══ إضافة مهمة ═══ -->
     <section class="add-task">
-
-        <input
-            type="text"
-            id="taskInput"
-            placeholder="اكتب المهمة..."
-        >
-
-        <input
-            type="date"
-            id="taskDate"
-        >
-
+        <input type="text" id="taskInput" placeholder="اكتب المهمة...">
+        <input type="date" id="taskDate">
         <select id="priority">
             <option value="low">منخفضة — 1 نقطة</option>
             <option value="medium">متوسطة — 2 نقطة</option>
             <option value="high">مهمة — 3 نقاط</option>
         </select>
-
-        <button onclick="addTask()">
-            ➕ إضافة المهمة
-        </button>
-
+        <button onclick="addTask()">➕ إضافة المهمة</button>
     </section>
 
-    <!-- تقييم اليوم -->
+    <!-- ═══ تقييم اليوم ═══ -->
     <section class="score-card">
-
         <h2>📊 أداء اليوم</h2>
-
-        <div class="percentage" id="percentage">
-            0%
-        </div>
-
+        <div class="percentage" id="percentage">0%</div>
         <div class="progress">
             <div id="progressBar"></div>
         </div>
-
         <div class="points">
-            <span>
-                المكتسب:
-                <strong id="earnedPoints">0</strong>
-            </span>
-
-            <span>
-                المجموع:
-                <strong id="possiblePoints">0</strong>
-            </span>
+            <span>المكتسب: <strong id="earnedPoints">0</strong></span>
+            <span>المجموع: <strong id="possiblePoints">0</strong></span>
         </div>
-
-        <p id="scoreMessage">
-            لا توجد مهام لهذا اليوم.
-        </p>
-
+        <p id="scoreMessage">لا توجد مهام لهذا اليوم.</p>
     </section>
 
-    <!-- إحصائيات -->
+    <!-- ═══ إحصائيات ═══ -->
     <section class="stats">
-
         <div>
             <strong id="totalTasks">0</strong>
             <span>كل المهام</span>
         </div>
-
         <div>
             <strong id="completedTasks">0</strong>
             <span>منجزة</span>
         </div>
-
         <div>
             <strong id="failedTasks">0</strong>
             <span>لم تنجز</span>
         </div>
-
         <div>
             <strong id="pendingTasks">0</strong>
             <span>متبقية</span>
         </div>
-
     </section>
 
-    <!-- البحث -->
-    <input
-        type="text"
-        id="searchInput"
-        class="search"
-        placeholder="🔎 ابحث عن مهمة..."
-        oninput="displayTasks()"
-    >
+    <!-- ═══ البحث ═══ -->
+    <input type="text" id="searchInput" class="search" placeholder="🔎 ابحث عن مهمة..." oninput="displayTasks()">
 
-    <!-- الفلاتر -->
+    <!-- ═══ الفلاتر ═══ -->
     <div class="filters">
-
-        <button onclick="setFilter('all')">
-            الكل
-        </button>
-
-        <button onclick="setFilter('pending')">
-            المتبقية
-        </button>
-
-        <button onclick="setFilter('completed')">
-            المنجزة
-        </button>
-
-        <button onclick="setFilter('failed')">
-            لم تنجز
-        </button>
-
+        <button onclick="setFilter('all')">الكل</button>
+        <button onclick="setFilter('pending')">المتبقية</button>
+        <button onclick="setFilter('completed')">المنجزة</button>
+        <button onclick="setFilter('failed')">لم تنجز</button>
     </div>
 
-    <!-- المهام -->
+    <!-- ═══ المهام ═══ -->
     <section id="taskList"></section>
 
-    <div id="emptyState" class="empty">
-        لا توجد مهام لهذا اليوم 📭
-    </div>
+    <div id="emptyState" class="empty">لا توجد مهام لهذا اليوم 📭</div>
 
-    <!-- قسم الملاحظات -->
+    <!-- ═══ قسم الملاحظات ═══ -->
     <section class="notes-section">
-
         <h2>📝 ملاحظاتي</h2>
 
         <div class="note-form">
-
-            <input
-                type="text"
-                id="noteTitle"
-                placeholder="عنوان الملاحظة..."
-            >
-
-            <textarea
-                id="noteContent"
-                placeholder="اكتب ملاحظتك هنا..."
-                rows="4"
-            ></textarea>
-
-            <button onclick="addNote()">
-                + إضافة ملاحظة
-            </button>
-
+            <input type="text" id="noteTitle" placeholder="عنوان الملاحظة...">
+            <textarea id="noteContent" placeholder="اكتب ملاحظتك هنا..." rows="4"></textarea>
+            <button onclick="addNote()">+ إضافة ملاحظة</button>
         </div>
 
         <div id="notesList"></div>
 
-        <div id="emptyNotes" class="empty">
-            لا توجد ملاحظات حتى الآن 📝
-        </div>
-
+        <div id="emptyNotes" class="empty">لا توجد ملاحظات حتى الآن 📝</div>
     </section>
-</div>
 
-<!-- 🪟 النافذة المنبثقة -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-box" id="modalBox">
-
-        <div class="modal-header">
-            <div class="modal-title-wrap">
-                <span class="modal-icon" id="modalIcon">⚠️</span>
-                <h3 id="modalTitle">تنبيه</h3>
-            </div>
-            <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">✕</button>
-        </div>
-
-        <div class="modal-body">
-            <p id="modalMessage">الرسالة هنا</p>
-            <input
-                type="text"
-                id="modalInput"
-                class="modal-input"
-                style="display: none;"
-            >
-        </div>
-
-        <div class="modal-actions" id="modalActions">
-            <!-- تُبنى الأزرار ديناميكياً -->
-        </div>
-
-    </div>
 </div>
 
 <script src="script.js"></script>
-
-</body>
 
 </body>
 </html>
