@@ -1,45 +1,34 @@
-/* ============================
+/* ════════════════════════════════════════
    المتغيرات العامة
-   ============================ */
+   ════════════════════════════════════════ */
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 let currentFilter = "all";
-
 let selectedDate = getToday();
 
-/* ============================
+/* ════════════════════════════════════════
    التاريخ
-   ============================ */
+   ════════════════════════════════════════ */
 
 function getToday() {
-
     const now = new Date();
-
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
-
     return `${year}-${month}-${day}`;
 }
 
 function formatDate(date) {
-
     const year = date.getFullYear();
-
     const month = String(date.getMonth() + 1).padStart(2, "0");
-
     const day = String(date.getDate()).padStart(2, "0");
-
     return `${year}-${month}-${day}`;
 }
 
 function changeDate() {
-
     const input = document.getElementById("viewDate");
-
     selectedDate = input.value;
-
     displayTasks();
     updateStats();
     updateDailyScore();
@@ -47,54 +36,39 @@ function changeDate() {
 }
 
 function previousDay() {
-
     const date = new Date(selectedDate + "T00:00:00");
-
     date.setDate(date.getDate() - 1);
-
     selectedDate = formatDate(date);
-
     refreshDay();
 }
 
 function nextDay() {
-
     const date = new Date(selectedDate + "T00:00:00");
-
     date.setDate(date.getDate() + 1);
-
     selectedDate = formatDate(date);
-
     refreshDay();
 }
 
 function goToToday() {
-
     selectedDate = getToday();
-
     refreshDay();
 }
 
 function refreshDay() {
-
     document.getElementById("viewDate").value = selectedDate;
-
     document.getElementById("taskDate").value = selectedDate;
-
     displayTasks();
     updateStats();
     updateDailyScore();
     updateDateDisplay();
 }
 
-/* ============================
+/* ════════════════════════════════════════
    عرض التاريخ
-   ============================ */
+   ════════════════════════════════════════ */
 
 function updateDateDisplay() {
-
     const date = new Date(selectedDate + "T00:00:00");
-
     const today = new Date(getToday() + "T00:00:00");
 
     const tomorrow = new Date(today);
@@ -103,9 +77,7 @@ function updateDateDisplay() {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    let name = date.toLocaleDateString("ar", {
-        weekday: "long"
-    });
+    let name = date.toLocaleDateString("ar", { weekday: "long" });
 
     if (selectedDate === getToday()) {
         name = "اليوم";
@@ -116,7 +88,6 @@ function updateDateDisplay() {
     }
 
     document.getElementById("dayName").textContent = name;
-
     document.getElementById("selectedDateText").textContent =
         date.toLocaleDateString("ar", {
             day: "numeric",
@@ -125,58 +96,37 @@ function updateDateDisplay() {
         });
 }
 
-/* ============================
+/* ════════════════════════════════════════
    النقاط
-   ============================ */
+   ════════════════════════════════════════ */
 
 function getPoints(priority) {
-
     if (priority === "high") return 3;
-
     if (priority === "medium") return 2;
-
     return 1;
 }
 
-/* ============================
+/* ════════════════════════════════════════
    إضافة مهمة
-   ============================ */
+   ════════════════════════════════════════ */
 
 function addTask() {
-
     const textInput = document.getElementById("taskInput");
-
     const dateInput = document.getElementById("taskDate");
-
     const priorityInput = document.getElementById("priority");
 
     const text = textInput.value.trim();
-
     const date = dateInput.value;
-
     const priority = priorityInput.value;
 
-   if (!text) {
-    showModal({
-        type: "info",
-        icon: "✍️",
-        title: "المهمة فارغة",
-        message: "اكتب نص المهمة أولاً.",
-        confirmText: "حسناً"
-    });
-    return;
-}
+    if (!text) {
+        alert("اكتب المهمة أولًا.");
+        return;
+    }
 
-if (!date) {
-    showModal({
-        type: "info",
-        icon: "📅",
-        title: "التاريخ مطلوب",
-        message: "اختر تاريخ المهمة.",
-        confirmText: "حسناً"
-    });
-    return;
-}
+    if (!date) {
+        alert("اختر تاريخ المهمة.");
+        return;
     }
 
     const task = {
@@ -189,118 +139,82 @@ if (!date) {
     };
 
     tasks.push(task);
-
     saveTasks();
 
     selectedDate = date;
-
     document.getElementById("viewDate").value = date;
-
     textInput.value = "";
 
     refreshDay();
 }
 
-/* ============================
+/* ════════════════════════════════════════
    تغيير حالة المهمة
-   ============================ */
+   ════════════════════════════════════════ */
 
 function completeTask(id) {
-
     const task = tasks.find(task => task.id === id);
-
     if (!task) return;
-
     task.status = "completed";
-
     saveTasks();
-
     refreshDay();
 }
 
 function failTask(id) {
-
     const task = tasks.find(task => task.id === id);
-
     if (!task) return;
-
     task.status = "failed";
-
     saveTasks();
-
     refreshDay();
 }
 
 function resetTask(id) {
-
     const task = tasks.find(task => task.id === id);
-
     if (!task) return;
-
     task.status = "pending";
-
     saveTasks();
-
     refreshDay();
 }
 
-/* ============================
-   حذف المهمة
-   ============================ */
+/* ════════════════════════════════════════
+   حذف وتعديل المهام
+   ════════════════════════════════════════ */
 
 function deleteTask(id) {
-
     const confirmed = confirm("هل تريد حذف هذه المهمة؟");
-
     if (!confirmed) return;
 
     tasks = tasks.filter(task => task.id !== id);
-
     saveTasks();
-
     refreshDay();
 }
 
-/* ============================
-   تعديل المهمة
-   ============================ */
-
 function editTask(id) {
-
     const task = tasks.find(task => task.id === id);
-
     if (!task) return;
 
     const newText = prompt("عدّل المهمة:", task.text);
-
     if (newText === null) return;
 
     const cleanText = newText.trim();
-
     if (!cleanText) return;
 
     task.text = cleanText;
-
     saveTasks();
-
     refreshDay();
 }
 
-/* ============================
+/* ════════════════════════════════════════
    الفلاتر
-   ============================ */
+   ════════════════════════════════════════ */
 
 function setFilter(filter) {
-
     currentFilter = filter;
-
     updateActiveFilter();
-
     displayTasks();
 }
 
 function updateActiveFilter() {
-
     const buttons = document.querySelectorAll(".filters button");
 
     buttons.forEach(button => {
@@ -321,37 +235,26 @@ function updateActiveFilter() {
     }
 }
 
-/* ============================
+/* ════════════════════════════════════════
    عرض المهام
-   ============================ */
+   ════════════════════════════════════════ */
 
 function displayTasks() {
-
     const taskList = document.getElementById("taskList");
-
     const emptyState = document.getElementById("emptyState");
 
-    const searchText =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
+    const searchText = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
 
     taskList.innerHTML = "";
 
     let filteredTasks = tasks.filter(task => {
-
         const sameDate = task.date === selectedDate;
-
-        const matchesSearch =
-            task.text.toLowerCase().includes(searchText);
-
+        const matchesSearch = task.text.toLowerCase().includes(searchText);
         const matchesFilter =
-            currentFilter === "all" ||
-            task.status === currentFilter;
+            currentFilter === "all" || task.status === currentFilter;
 
         return sameDate && matchesSearch && matchesFilter;
-
     });
 
     filteredTasks.sort((a, b) => {
@@ -366,14 +269,11 @@ function displayTasks() {
     emptyState.style.display = "none";
 
     filteredTasks.forEach(task => {
-
         const div = document.createElement("div");
-
         div.className = "task " +
             (task.status === "completed" ? "completed" : "");
 
         let priorityText = "";
-
         if (task.priority === "high") {
             priorityText = "🔴 مهمة — 3 نقاط";
         } else if (task.priority === "medium") {
@@ -383,7 +283,6 @@ function displayTasks() {
         }
 
         let statusText = "";
-
         if (task.status === "completed") {
             statusText = "✅ منجزة";
         } else if (task.status === "failed") {
@@ -393,57 +292,40 @@ function displayTasks() {
         }
 
         div.innerHTML = `
-            <div class="task-title">
-                ${escapeHTML(task.text)}
-            </div>
-
+            <div class="task-title">${escapeHTML(task.text)}</div>
             <div class="task-info">
                 <span class="priority">${priorityText}</span>
                 <span class="priority">${statusText}</span>
             </div>
-
             <div class="task-actions">
-                ${
-                    task.status !== "completed"
+                ${task.status !== "completed"
                     ? `<button onclick="completeTask(${task.id})">✅ أنجزت</button>`
-                    : ""
-                }
-                ${
-                    task.status !== "failed"
+                    : ""}
+                ${task.status !== "failed"
                     ? `<button onclick="failTask(${task.id})">❌ لم أنجز</button>`
-                    : ""
-                }
-                ${
-                    task.status !== "pending"
+                    : ""}
+                ${task.status !== "pending"
                     ? `<button onclick="resetTask(${task.id})">🔄 إعادة</button>`
-                    : ""
-                }
+                    : ""}
                 <button onclick="editTask(${task.id})">✏️ تعديل</button>
                 <button onclick="deleteTask(${task.id})">🗑️ حذف</button>
             </div>
         `;
 
         taskList.appendChild(div);
-
     });
 }
 
-/* ============================
+/* ════════════════════════════════════════
    الإحصائيات
-   ============================ */
+   ════════════════════════════════════════ */
 
 function updateStats() {
-
     const todayTasks = tasks.filter(task => task.date === selectedDate);
 
-    const completed =
-        todayTasks.filter(task => task.status === "completed").length;
-
-    const failed =
-        todayTasks.filter(task => task.status === "failed").length;
-
-    const pending =
-        todayTasks.filter(task => task.status === "pending").length;
+    const completed = todayTasks.filter(t => t.status === "completed").length;
+    const failed = todayTasks.filter(t => t.status === "failed").length;
+    const pending = todayTasks.filter(t => t.status === "pending").length;
 
     document.getElementById("totalTasks").textContent = todayTasks.length;
     document.getElementById("completedTasks").textContent = completed;
@@ -451,31 +333,25 @@ function updateStats() {
     document.getElementById("pendingTasks").textContent = pending;
 }
 
-/* ============================
+/* ════════════════════════════════════════
    التقييم اليومي
-   ============================ */
+   ════════════════════════════════════════ */
 
 function updateDailyScore() {
-
     const dayTasks = tasks.filter(task => task.date === selectedDate);
 
     let possiblePoints = 0;
     let earnedPoints = 0;
 
     dayTasks.forEach(task => {
-
         const points = getPoints(task.priority);
-
         possiblePoints += points;
-
         if (task.status === "completed") {
             earnedPoints += points;
         }
-
     });
 
     let percentage = 0;
-
     if (possiblePoints > 0) {
         percentage = Math.round((earnedPoints / possiblePoints) * 100);
     }
@@ -500,59 +376,38 @@ function updateDailyScore() {
     }
 }
 
-/* ============================
-   حفظ البيانات
-   ============================ */
+/* ════════════════════════════════════════
+   الحفظ والحماية
+   ════════════════════════════════════════ */
 
 function saveTasks() {
-
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-/* ============================
-   حماية النص
-   ============================ */
-
-function escapeHTML(text) {
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
-}
-
-/* ============================
-   نظام الملاحظات
-   ============================ */
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
 function saveNotes() {
-
     localStorage.setItem("notes", JSON.stringify(notes));
 }
 
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/* ════════════════════════════════════════
+   نظام الملاحظات
+   ════════════════════════════════════════ */
+
 function addNote() {
-
     const titleInput = document.getElementById("noteTitle");
-
     const contentInput = document.getElementById("noteContent");
 
     const title = titleInput.value.trim();
-
     const content = contentInput.value.trim();
 
     if (!title || !content) {
-    showModal({
-        type: "info",
-        icon: "📝",
-        title: "الملاحظة ناقصة",
-        message: "اكتب عنوان الملاحظة ومحتواها.",
-        confirmText: "حسناً"
-    });
-    return;
-}
+        alert("اكتب عنوان الملاحظة ومحتواها.");
+        return;
     }
 
     const note = {
@@ -563,9 +418,7 @@ function addNote() {
     };
 
     notes.unshift(note);
-
     saveNotes();
-
     displayNotes();
 
     titleInput.value = "";
@@ -573,9 +426,7 @@ function addNote() {
 }
 
 function displayNotes() {
-
     const list = document.getElementById("notesList");
-
     const empty = document.getElementById("emptyNotes");
 
     list.innerHTML = "";
@@ -583,11 +434,8 @@ function displayNotes() {
     empty.style.display = notes.length === 0 ? "block" : "none";
 
     notes.forEach(note => {
-
         const card = document.createElement("div");
-
         card.className = "note-card";
-
         card.innerHTML = `
             <h3>${escapeHTML(note.title)}</h3>
             <p>${escapeHTML(note.content)}</p>
@@ -596,210 +444,12 @@ function displayNotes() {
                 <button onclick="deleteNote(${note.id})">🗑️ حذف</button>
             </div>
         `;
-
         list.appendChild(card);
-
     });
 }
 
 function editNote(id) {
-
     const note = notes.find(n => n.id === id);
-
     if (!note) return;
 
     const newTitle = prompt("عنوان الملاحظة:", note.title);
-
-    if (newTitle === null) return;
-
-    const newContent = prompt("محتوى الملاحظة:", note.content);
-
-    if (newContent === null) return;
-
-    if (!newTitle.trim() || !newContent.trim()) {
-    showModal({
-        type: "info",
-        icon: "⚠️",
-        title: "حقول فارغة",
-        message: "لا يمكن ترك العنوان أو المحتوى فارغاً.",
-        confirmText: "حسناً"
-    });
-    return;
-}
-    }
-
-    note.title = newTitle.trim();
-    note.content = newContent.trim();
-
-    saveNotes();
-
-    displayNotes();
-}
-
-function deleteNote(id) {
-
-    const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
-
-    if (!confirmed) return;
-
-    notes = notes.filter(n => n.id !== id);
-
-    saveNotes();
-
-    displayNotes();
-}
-
-/* ============================
-   التشغيل الأول
-   ============================ */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    document.getElementById("viewDate").value = selectedDate;
-
-    document.getElementById("taskDate").value = selectedDate;
-
-    document.getElementById("taskInput")
-        .addEventListener("keydown", function (event) {
-
-            if (event.key === "Enter") {
-                addTask();
-            }
-
-        });
-
-    updateDateDisplay();
-
-    updateActiveFilter();
-
-    displayTasks();
-
-    updateStats();
-
-    updateDailyScore();
-
-    displayNotes();
-
-/* ============================
-   النوافذ المنبثقة (Modals)
-   ============================ */
-
-let modalCallback = null;
-
-/**
- * فتح نافذة منبثقة
- * @param {Object} options
- *   - type: "info" | "warning" | "input"  (اللون والنمط)
- *   - title: العنوان
- *   - icon: الإيموجي
- *   - message: النص
- *   - inputValue: القيمة الأولية (لنوع input)
- *   - inputPlaceholder
- *   - confirmText: نص زر التأكيد
- *   - cancelText: نص زر الإلغاء (إن أردت زرين)
- *   - onConfirm: دالة تُستدعى عند التأكيد (تستقبل قيمة الحقل في نوع input)
- *   - onCancel: دالة تُستدعى عند الإلغاء (اختياري)
- */
-function showModal(options) {
-
-    const overlay = document.getElementById("modalOverlay");
-    const box = document.getElementById("modalBox");
-    const icon = document.getElementById("modalIcon");
-    const title = document.getElementById("modalTitle");
-    const message = document.getElementById("modalMessage");
-    const input = document.getElementById("modalInput");
-    const actions = document.getElementById("modalActions");
-
-    // النوع
-    const type = options.type || "info";
-    box.className = "modal-box type-" + type;
-
-    // الأيقونة والعنوان
-    icon.textContent = options.icon || "⚠️";
-    title.textContent = options.title || "تنبيه";
-
-    // الرسالة
-    message.textContent = options.message || "";
-
-    // حقل الإدخال
-    if (type === "input") {
-        input.style.display = "block";
-        input.value = options.inputValue || "";
-        input.placeholder = options.inputPlaceholder || "";
-    } else {
-        input.style.display = "none";
-        input.value = "";
-    }
-
-    // الأزرار
-    actions.innerHTML = "";
-
-    // زر الإلغاء (اختياري)
-    if (options.cancelText) {
-        const cancelBtn = document.createElement("button");
-        cancelBtn.className = "modal-btn modal-btn-secondary";
-        cancelBtn.textContent = options.cancelText;
-        cancelBtn.onclick = function () {
-            closeModal();
-            if (options.onCancel) options.onCancel();
-        };
-        actions.appendChild(cancelBtn);
-    }
-
-    // زر التأكيد
-    const confirmBtn = document.createElement("button");
-    confirmBtn.className = "modal-btn modal-btn-primary";
-    confirmBtn.textContent = options.confirmText || "حسناً";
-    confirmBtn.onclick = function () {
-        const value = input.value;
-        closeModal();
-        if (options.onConfirm) options.onConfirm(value);
-    };
-    actions.appendChild(confirmBtn);
-
-    // إظهار النافذة
-    overlay.classList.add("show");
-
-    // التركيز على الحقل أو الزر
-    setTimeout(() => {
-        if (type === "input") {
-            input.focus();
-            input.select();
-        } else {
-            confirmBtn.focus();
-        }
-    }, 100);
-
-    // استدعاءات سريعة
-    modalCallback = options.onConfirm;
-}
-
-function closeModal() {
-    const overlay = document.getElementById("modalOverlay");
-    overlay.classList.remove("show");
-    modalCallback = null;
-}
-// إغلاق النافذة عند الضغط على الخلفية
-    document.getElementById("modalOverlay").addEventListener("click", function (e) {
-        if (e.target.id === "modalOverlay") {
-            closeModal();
-        }
-    });
-
-    // إغلاق النافذة بمفتاح Escape
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-            closeModal();
-        }
-    });
-
-    // إرسال Enter في حقل الإدخال
-    document.getElementById("modalInput").addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            const value = this.value;
-            const callback = modalCallback;
-            closeModal();
-            if (callback) callback(value);
-        }
-    });
-});
