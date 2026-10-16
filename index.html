@@ -205,7 +205,38 @@
     </section>
 </div>
 
+<!-- 🪟 النافذة المنبثقة -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+
+        <div class="modal-header">
+            <div class="modal-title-wrap">
+                <span class="modal-icon" id="modalIcon">⚠️</span>
+                <h3 id="modalTitle">تنبيه</h3>
+            </div>
+            <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">✕</button>
+        </div>
+
+        <div class="modal-body">
+            <p id="modalMessage">الرسالة هنا</p>
+            <input
+                type="text"
+                id="modalInput"
+                class="modal-input"
+                style="display: none;"
+            >
+        </div>
+
+        <div class="modal-actions" id="modalActions">
+            <!-- تُبنى الأزرار ديناميكياً -->
+        </div>
+
+    </div>
+</div>
+
 <script src="script.js"></script>
+
+</body>
 
 </body>
 </html>
