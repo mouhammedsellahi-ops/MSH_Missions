@@ -156,14 +156,27 @@ function addTask() {
 
     const priority = priorityInput.value;
 
-    if (!text) {
-        alert("اكتب المهمة أولًا.");
-        return;
-    }
+   if (!text) {
+    showModal({
+        type: "info",
+        icon: "✍️",
+        title: "المهمة فارغة",
+        message: "اكتب نص المهمة أولاً.",
+        confirmText: "حسناً"
+    });
+    return;
+}
 
-    if (!date) {
-        alert("اختر تاريخ المهمة.");
-        return;
+if (!date) {
+    showModal({
+        type: "info",
+        icon: "📅",
+        title: "التاريخ مطلوب",
+        message: "اختر تاريخ المهمة.",
+        confirmText: "حسناً"
+    });
+    return;
+}
     }
 
     const task = {
@@ -531,8 +544,15 @@ function addNote() {
     const content = contentInput.value.trim();
 
     if (!title || !content) {
-        alert("اكتب عنوان الملاحظة ومحتواها.");
-        return;
+    showModal({
+        type: "info",
+        icon: "📝",
+        title: "الملاحظة ناقصة",
+        message: "اكتب عنوان الملاحظة ومحتواها.",
+        confirmText: "حسناً"
+    });
+    return;
+}
     }
 
     const note = {
@@ -597,8 +617,15 @@ function editNote(id) {
     if (newContent === null) return;
 
     if (!newTitle.trim() || !newContent.trim()) {
-        alert("لا يمكن ترك العنوان أو المحتوى فارغًا.");
-        return;
+    showModal({
+        type: "info",
+        icon: "⚠️",
+        title: "حقول فارغة",
+        message: "لا يمكن ترك العنوان أو المحتوى فارغاً.",
+        confirmText: "حسناً"
+    });
+    return;
+}
     }
 
     note.title = newTitle.trim();
@@ -653,4 +680,126 @@ document.addEventListener("DOMContentLoaded", function () {
 
     displayNotes();
 
+/* ============================
+   النوافذ المنبثقة (Modals)
+   ============================ */
+
+let modalCallback = null;
+
+/**
+ * فتح نافذة منبثقة
+ * @param {Object} options
+ *   - type: "info" | "warning" | "input"  (اللون والنمط)
+ *   - title: العنوان
+ *   - icon: الإيموجي
+ *   - message: النص
+ *   - inputValue: القيمة الأولية (لنوع input)
+ *   - inputPlaceholder
+ *   - confirmText: نص زر التأكيد
+ *   - cancelText: نص زر الإلغاء (إن أردت زرين)
+ *   - onConfirm: دالة تُستدعى عند التأكيد (تستقبل قيمة الحقل في نوع input)
+ *   - onCancel: دالة تُستدعى عند الإلغاء (اختياري)
+ */
+function showModal(options) {
+
+    const overlay = document.getElementById("modalOverlay");
+    const box = document.getElementById("modalBox");
+    const icon = document.getElementById("modalIcon");
+    const title = document.getElementById("modalTitle");
+    const message = document.getElementById("modalMessage");
+    const input = document.getElementById("modalInput");
+    const actions = document.getElementById("modalActions");
+
+    // النوع
+    const type = options.type || "info";
+    box.className = "modal-box type-" + type;
+
+    // الأيقونة والعنوان
+    icon.textContent = options.icon || "⚠️";
+    title.textContent = options.title || "تنبيه";
+
+    // الرسالة
+    message.textContent = options.message || "";
+
+    // حقل الإدخال
+    if (type === "input") {
+        input.style.display = "block";
+        input.value = options.inputValue || "";
+        input.placeholder = options.inputPlaceholder || "";
+    } else {
+        input.style.display = "none";
+        input.value = "";
+    }
+
+    // الأزرار
+    actions.innerHTML = "";
+
+    // زر الإلغاء (اختياري)
+    if (options.cancelText) {
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "modal-btn modal-btn-secondary";
+        cancelBtn.textContent = options.cancelText;
+        cancelBtn.onclick = function () {
+            closeModal();
+            if (options.onCancel) options.onCancel();
+        };
+        actions.appendChild(cancelBtn);
+    }
+
+    // زر التأكيد
+    const confirmBtn = document.createElement("button");
+    confirmBtn.className = "modal-btn modal-btn-primary";
+    confirmBtn.textContent = options.confirmText || "حسناً";
+    confirmBtn.onclick = function () {
+        const value = input.value;
+        closeModal();
+        if (options.onConfirm) options.onConfirm(value);
+    };
+    actions.appendChild(confirmBtn);
+
+    // إظهار النافذة
+    overlay.classList.add("show");
+
+    // التركيز على الحقل أو الزر
+    setTimeout(() => {
+        if (type === "input") {
+            input.focus();
+            input.select();
+        } else {
+            confirmBtn.focus();
+        }
+    }, 100);
+
+    // استدعاءات سريعة
+    modalCallback = options.onConfirm;
+}
+
+function closeModal() {
+    const overlay = document.getElementById("modalOverlay");
+    overlay.classList.remove("show");
+    modalCallback = null;
+}
+// إغلاق النافذة عند الضغط على الخلفية
+    document.getElementById("modalOverlay").addEventListener("click", function (e) {
+        if (e.target.id === "modalOverlay") {
+            closeModal();
+        }
+    });
+
+    // إغلاق النافذة بمفتاح Escape
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    // إرسال Enter في حقل الإدخال
+    document.getElementById("modalInput").addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            const value = this.value;
+            const callback = modalCallback;
+            closeModal();
+            if (callback) callback(value);
+        }
+    });
 });
