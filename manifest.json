@@ -1,0 +1,27 @@
+{
+    "name": "Med-SH Missions",
+    "short_name": "Med-SH",
+    "description": "تطبيق إدارة المهام اليومية",
+    "start_url": "/MSH_Missions/",
+    "scope": "/MSH_Missions/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#123D2D",
+    "theme_color": "#123D2D",
+    "lang": "ar",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "IMG_6810.jpeg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any"
+        },
+        {
+            "src": "IMG_6810.jpeg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any"
+        }
+    ]
+}
