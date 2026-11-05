@@ -452,4 +452,43 @@ function editNote(id) {
     const note = notes.find(n => n.id === id);
     if (!note) return;
 
+    const newTitle = prompt("عنوان الملاحظة:", note.title);function editNote(id) {
+    const note = notes.find(n => n.id === id);
+    if (!note) return;
+
     const newTitle = prompt("عنوان الملاحظة:", note.title);
+    if (newTitle === null) return;
+
+    const newContent = prompt("محتوى الملاحظة:", note.content);
+    if (newContent === null) return;
+
+    const cleanTitle = newTitle.trim();
+    const cleanContent = newContent.trim();
+    if (!cleanTitle || !cleanContent) return;
+
+    note.title = cleanTitle;
+    note.content = cleanContent;
+    saveNotes();
+    displayNotes();
+}
+
+function deleteNote(id) {
+    const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
+    if (!confirmed) return;
+
+    notes = notes.filter(n => n.id !== id);
+    saveNotes();
+    displayNotes();
+}
+
+/* ════════════════════════════════════════
+   التشغيل الأولي
+   ════════════════════════════════════════ */
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("viewDate").value = selectedDate;
+    document.getElementById("taskDate").value = selectedDate;
+    refreshDay();
+    displayNotes();
+});
+    
