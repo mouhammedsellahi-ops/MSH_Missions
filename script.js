@@ -453,4 +453,55 @@ function editNote(id) {
     if (!note) return;
 
     const newTitle = prompt("عنوان الملاحظة:", note.title);
+    if (newTitle === null) return;
+
+    const newContent = prompt("محتوى الملاحظة:", note.content);
+    if (newContent === null) return;
+
+    if (!newTitle.trim() || !newContent.trim()) {
+        alert("لا يمكن ترك العنوان أو المحتوى فارغًا.");
+        return;
+    }
+
+    note.title = newTitle.trim();
+    note.content = newContent.trim();
+
+    saveNotes();
+    displayNotes();
+}
+
+function deleteNote(id) {
+    const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
+    if (!confirmed) return;
+
+    notes = notes.filter(n => n.id !== id);
+    saveNotes();
+    displayNotes();
+}
+
+/* ════════════════════════════════════════
+   التشغيل الأول (DOMContentLoaded)
+   ════════════════════════════════════════ */
+
+document.addEventListener("DOMContentLoaded", function () {
+    // ضبط التواريخ الأولية
+    document.getElementById("viewDate").value = selectedDate;
+    document.getElementById("taskDate").value = selectedDate;
+
+    // مستمع زر Enter في حقل المهمة
+    document.getElementById("taskInput")
+        .addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+
+    // التهيئة الأولى
+    updateDateDisplay();
+    updateActiveFilter();
+    displayTasks();
+    updateStats();
+    updateDailyScore();
+    displayNotes();
+});
     
