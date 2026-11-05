@@ -214,25 +214,17 @@ function setFilter(filter) {
     displayTasks();
 }
 
+// ✅ تم تعديلها لتعتمد على data-filter بدلًا من الترتيب
 function updateActiveFilter() {
     const buttons = document.querySelectorAll(".filters button");
 
     buttons.forEach(button => {
-        button.classList.remove("active");
+        if (button.dataset.filter === currentFilter) {
+            button.classList.add("active");
+        } else {
+            button.classList.remove("active");
+        }
     });
-
-    const filterMap = {
-        "all": 0,
-        "pending": 1,
-        "completed": 2,
-        "failed": 3
-    };
-
-    const index = filterMap[currentFilter];
-
-    if (index !== undefined && buttons[index]) {
-        buttons[index].classList.add("active");
-    }
 }
 
 /* ════════════════════════════════════════
@@ -243,8 +235,11 @@ function displayTasks() {
     const taskList = document.getElementById("taskList");
     const emptyState = document.getElementById("emptyState");
 
-    const searchText = document.getElementById("searchInput")
-        .value.toLowerCase().trim();
+    // ✅ حماية من عدم وجود searchInput
+    const searchInput = document.getElementById("searchInput");
+    const searchText = searchInput
+        ? searchInput.value.toLowerCase().trim()
+        : "";
 
     taskList.innerHTML = "";
 
@@ -448,11 +443,8 @@ function displayNotes() {
     });
 }
 
+// ✅ تم إكمال الدالة editNote
 function editNote(id) {
-    const note = notes.find(n => n.id === id);
-    if (!note) return;
-
-    const newTitle = prompt("عنوان الملاحظة:", note.title);function editNote(id) {
     const note = notes.find(n => n.id === id);
     if (!note) return;
 
@@ -472,6 +464,7 @@ function editNote(id) {
     displayNotes();
 }
 
+// ✅ تمت إضافة الدالة الناقصة deleteNote
 function deleteNote(id) {
     const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
     if (!confirmed) return;
@@ -485,10 +478,16 @@ function deleteNote(id) {
    التشغيل الأولي
    ════════════════════════════════════════ */
 
+// ✅ تشغيل آمن بعد جاهزية DOM
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("viewDate").value = selectedDate;
-    document.getElementById("taskDate").value = selectedDate;
+    const viewDate = document.getElementById("viewDate");
+    const taskDate = document.getElementById("taskDate");
+
+    if (viewDate) viewDate.value = selectedDate;
+    if (taskDate) taskDate.value = selectedDate;
+
     refreshDay();
     displayNotes();
+    updateActiveFilter();
 });
     
