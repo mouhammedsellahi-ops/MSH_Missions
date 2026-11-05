@@ -489,5 +489,103 @@ document.addEventListener("DOMContentLoaded", () => {
     refreshDay();
     displayNotes();
     updateActiveFilter();
-});
+/* ============================
+   النوافذ المنبثقة (Modals)
+   ============================ */
+
+let modalCallback = null;
+
+/**
+ * فتح نافذة منبثقة
+ * @param {Object} options
+ *   - type: "info" | "warning" | "input"  (اللون والنمط)
+ *   - title: العنوان
+ *   - icon: الإيموجي
+ *   - message: النص
+ *   - inputValue: القيمة الأولية (لنوع input)
+ *   - inputPlaceholder
+ *   - confirmText: نص زر التأكيد
+ *   - cancelText: نص زر الإلغاء (إن أردت زرين)
+ *   - onConfirm: دالة تُستدعى عند التأكيد (تستقبل قيمة الحقل في نوع input)
+ *   - onCancel: دالة تُستدعى عند الإلغاء (اختياري)
+ */
+function showModal(options) {
+
+    const overlay = document.getElementById("modalOverlay");
+    const box = document.getElementById("modalBox");
+    const icon = document.getElementById("modalIcon");
+    const title = document.getElementById("modalTitle");
+    const message = document.getElementById("modalMessage");
+    const input = document.getElementById("modalInput");
+    const actions = document.getElementById("modalActions");
+
+    // النوع
+    const type = options.type || "info";
+    box.className = "modal-box type-" + type;
+
+    // الأيقونة والعنوان
+    icon.textContent = options.icon || "⚠️";
+    title.textContent = options.title || "تنبيه";
+
+    // الرسالة
+    message.textContent = options.message || "";
+
+    // حقل الإدخال
+    if (type === "input") {
+        input.style.display = "block";
+        input.value = options.inputValue || "";
+        input.placeholder = options.inputPlaceholder || "";
+    } else {
+        input.style.display = "none";
+        input.value = "";
+    }
+
+    // الأزرار
+    actions.innerHTML = "";
+
+    // زر الإلغاء (اختياري)
+    if (options.cancelText) {
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "modal-btn modal-btn-secondary";
+        cancelBtn.textContent = options.cancelText;
+        cancelBtn.onclick = function () {
+            closeModal();
+            if (options.onCancel) options.onCancel();
+        };
+        actions.appendChild(cancelBtn);
+    }
+
+    // زر التأكيد
+    const confirmBtn = document.createElement("button");
+    confirmBtn.className = "modal-btn modal-btn-primary";
+    confirmBtn.textContent = options.confirmText || "حسناً";
+    confirmBtn.onclick = function () {
+        const value = input.value;
+        closeModal();
+        if (options.onConfirm) options.onConfirm(value);
+    };
+    actions.appendChild(confirmBtn);
+
+    // إظهار النافذة
+    overlay.classList.add("show");
+
+    // التركيز على الحقل أو الزر
+    setTimeout(() => {
+        if (type === "input") {
+            input.focus();
+            input.select();
+        } else {
+            confirmBtn.focus();
+        }
+    }, 100);
+
+    // استدعاءات سريعة
+    modalCallback = options.onConfirm;
+}
+
+function closeModal() {
+    const overlay = document.getElementById("modalOverlay");
+    overlay.classList.remove("show");
+    modalCallback = null;
+}});
     
