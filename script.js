@@ -214,17 +214,25 @@ function setFilter(filter) {
     displayTasks();
 }
 
-// ✅ تم تعديلها لتعتمد على data-filter بدلًا من الترتيب
 function updateActiveFilter() {
     const buttons = document.querySelectorAll(".filters button");
 
     buttons.forEach(button => {
-        if (button.dataset.filter === currentFilter) {
-            button.classList.add("active");
-        } else {
-            button.classList.remove("active");
-        }
+        button.classList.remove("active");
     });
+
+    const filterMap = {
+        "all": 0,
+        "pending": 1,
+        "completed": 2,
+        "failed": 3
+    };
+
+    const index = filterMap[currentFilter];
+
+    if (index !== undefined && buttons[index]) {
+        buttons[index].classList.add("active");
+    }
 }
 
 /* ════════════════════════════════════════
@@ -235,11 +243,8 @@ function displayTasks() {
     const taskList = document.getElementById("taskList");
     const emptyState = document.getElementById("emptyState");
 
-    // ✅ حماية من عدم وجود searchInput
-    const searchInput = document.getElementById("searchInput");
-    const searchText = searchInput
-        ? searchInput.value.toLowerCase().trim()
-        : "";
+    const searchText = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
 
     taskList.innerHTML = "";
 
@@ -443,149 +448,8 @@ function displayNotes() {
     });
 }
 
-// ✅ تم إكمال الدالة editNote
 function editNote(id) {
     const note = notes.find(n => n.id === id);
     if (!note) return;
 
     const newTitle = prompt("عنوان الملاحظة:", note.title);
-    if (newTitle === null) return;
-
-    const newContent = prompt("محتوى الملاحظة:", note.content);
-    if (newContent === null) return;
-
-    const cleanTitle = newTitle.trim();
-    const cleanContent = newContent.trim();
-    if (!cleanTitle || !cleanContent) return;
-
-    note.title = cleanTitle;
-    note.content = cleanContent;
-    saveNotes();
-    displayNotes();
-}
-
-// ✅ تمت إضافة الدالة الناقصة deleteNote
-function deleteNote(id) {
-    const confirmed = confirm("هل تريد حذف هذه الملاحظة؟");
-    if (!confirmed) return;
-
-    notes = notes.filter(n => n.id !== id);
-    saveNotes();
-    displayNotes();
-}
-
-/* ════════════════════════════════════════
-   التشغيل الأولي
-   ════════════════════════════════════════ */
-
-// ✅ تشغيل آمن بعد جاهزية DOM
-document.addEventListener("DOMContentLoaded", () => {
-    const viewDate = document.getElementById("viewDate");
-    const taskDate = document.getElementById("taskDate");
-
-    if (viewDate) viewDate.value = selectedDate;
-    if (taskDate) taskDate.value = selectedDate;
-
-    refreshDay();
-    displayNotes();
-    updateActiveFilter();
-/* ============================
-   النوافذ المنبثقة (Modals)
-   ============================ */
-
-let modalCallback = null;
-
-/**
- * فتح نافذة منبثقة
- * @param {Object} options
- *   - type: "info" | "warning" | "input"  (اللون والنمط)
- *   - title: العنوان
- *   - icon: الإيموجي
- *   - message: النص
- *   - inputValue: القيمة الأولية (لنوع input)
- *   - inputPlaceholder
- *   - confirmText: نص زر التأكيد
- *   - cancelText: نص زر الإلغاء (إن أردت زرين)
- *   - onConfirm: دالة تُستدعى عند التأكيد (تستقبل قيمة الحقل في نوع input)
- *   - onCancel: دالة تُستدعى عند الإلغاء (اختياري)
- */
-function showModal(options) {
-
-    const overlay = document.getElementById("modalOverlay");
-    const box = document.getElementById("modalBox");
-    const icon = document.getElementById("modalIcon");
-    const title = document.getElementById("modalTitle");
-    const message = document.getElementById("modalMessage");
-    const input = document.getElementById("modalInput");
-    const actions = document.getElementById("modalActions");
-
-    // النوع
-    const type = options.type || "info";
-    box.className = "modal-box type-" + type;
-
-    // الأيقونة والعنوان
-    icon.textContent = options.icon || "⚠️";
-    title.textContent = options.title || "تنبيه";
-
-    // الرسالة
-    message.textContent = options.message || "";
-
-    // حقل الإدخال
-    if (type === "input") {
-        input.style.display = "block";
-        input.value = options.inputValue || "";
-        input.placeholder = options.inputPlaceholder || "";
-    } else {
-        input.style.display = "none";
-        input.value = "";
-    }
-
-    // الأزرار
-    actions.innerHTML = "";
-
-    // زر الإلغاء (اختياري)
-    if (options.cancelText) {
-        const cancelBtn = document.createElement("button");
-        cancelBtn.className = "modal-btn modal-btn-secondary";
-        cancelBtn.textContent = options.cancelText;
-        cancelBtn.onclick = function () {
-            closeModal();
-            if (options.onCancel) options.onCancel();
-        };
-        actions.appendChild(cancelBtn);
-    }
-
-    // زر التأكيد
-    const confirmBtn = document.createElement("button");
-    confirmBtn.className = "modal-btn modal-btn-primary";
-    confirmBtn.textContent = options.confirmText || "حسناً";
-    confirmBtn.onclick = function () {
-        const value = input.value;
-        closeModal();
-        if (options.onConfirm) options.onConfirm(value);
-    };
-    actions.appendChild(confirmBtn);
-
-    // إظهار النافذة
-    overlay.classList.add("show");
-
-    // التركيز على الحقل أو الزر
-    setTimeout(() => {
-        if (type === "input") {
-            input.focus();
-            input.select();
-        } else {
-            confirmBtn.focus();
-        }
-    }, 100);
-
-    // استدعاءات سريعة
-    modalCallback = options.onConfirm;
-}
-
-function closeModal() {
-    const overlay = document.getElementById("modalOverlay");
-    overlay.classList.remove("show");
-    modalCallback = null;
-}});
-    
