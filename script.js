@@ -453,3 +453,4 @@ function editNote(id) {
     if (!note) return;
 
     const newTitle = prompt("عنوان الملاحظة:", note.title);
+    
